@@ -1,0 +1,9 @@
+<a href="{% url 'task_create' %}">Add Task</a>
+
+{% for task in tasks %}
+    <p>
+        {{ task.title }}
+        <a href="{% url 'task_update' task.id %}">Edit</a>
+        <a href="{% url 'task_delete' task.id %}">Delete</a>
+    </p>
+{% endfor %}
