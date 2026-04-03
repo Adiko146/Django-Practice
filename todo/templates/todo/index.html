@@ -1,9 +1,27 @@
-<a href="{% url 'task_create' %}">Add Task</a>
+{% if user.is_authenticated %}
+    <h1>My Tasks</h1>
 
-{% for task in tasks %}
-    <p>
-        {{ task.title }}
-        <a href="{% url 'task_update' task.id %}">Edit</a>
-        <a href="{% url 'task_delete' task.id %}">Delete</a>
-    </p>
-{% endfor %}
+    <a href="{% url 'task_create' %}">➕ Add Task</a>
+
+    <ul>
+    {% for task in tasks %}
+        <li>
+            {{ task.title }} - 
+            {% if task.complete %}✅{% else %}❌{% endif %}
+
+            <a href="{% url 'task_update' task.id %}">Edit</a>
+            <a href="{% url 'task_delete' task.id %}">Delete</a>
+        </li>
+        {% empty %}
+            <p>No tasks yet...</p>
+        {% endfor %}
+    </ul>
+
+    <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+
+{% else %}
+    <a href="{% url 'login' %}">Login</a>
+{% endif %}
