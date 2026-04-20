@@ -2,8 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Task(models.Model):
+
+    STATUS_CHOICES = [
+        ('pending', 'In Progress'),
+        ('completed', 'Completed'),
+    ]
+    
     title = models.CharField(max_length=200)
-    complete = models.BooleanField(default=False)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

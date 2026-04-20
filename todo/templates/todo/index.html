@@ -4,10 +4,19 @@
     <a href="{% url 'task_create' %}">➕ Add Task</a>
 
     <ul>
+
+    <a href="{% url 'index' %}">All</a>
+    <a href="?status=pending">Active</a>
+    <a href="?status=completed">Completed</a>
+    
     {% for task in tasks %}
         <li>
             {{ task.title }} - 
-            {% if task.complete %}✅{% else %}❌{% endif %}
+            {% if task.status == 'completed' %}
+                ✅
+            {% else %}
+                ❌
+            {% endif %}
 
             <a href="{% url 'task_update' task.id %}">Edit</a>
             <a href="{% url 'task_delete' task.id %}">Delete</a>
